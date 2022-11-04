@@ -1,0 +1,4 @@
+[01:51:01.319572][INFO] write to file './log/log_04112022_015101.txt' without a subprocess
+[01:51:01.319572][INFO] log_level is set to INFO:2
+[01:51:01.320530][INFO] try to connect to 192.168.1.10
+[01:51:22.358978][ERROR] could not reach 192.168.1.10
