@@ -1,6 +1,6 @@
 from backend.handler import Handler
 from backend.gui import ui_interface
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query,Response
 from backend.pmodules.mqtt import MqttListener, MqttSender
 from PyQt5.QtCore import QPointF, QRandomGenerator, QRect, QTimer, QDateTime
 import queue
@@ -116,23 +116,32 @@ timer_list.start(500)
 @app.get("/overview/buttons/{button_clicked}")
 async def connect_events(button_clicked:str):
     if button_clicked=="detection":
-        handler.start_det_pose
-    elif button_clicked=="detection-human":
-        handler.start_det_pose_human
-    elif button_clicked=="detection-forklift":
-        handler.start_det_pose_vehicle
+         handler.start_det_pose()
+         return {"success":"detection started"}
+       
+    ##elif button_clicked=="detection-human":
+    ##    handler.start_det_pose_human
+    ##elif button_clicked=="detection-forklift":
+    ##    handler.start_det_pose_vehicle
     elif button_clicked=="stop":
-        handler.stop
+        handler.stop()
+        return {"success":"sensors stopped"}
     elif button_clicked=="reset-camera":
-        reset_camera
+        reset_camera()
+        return {"success":"Camera reset successfully"}
     elif button_clicked=="reboot":
-        handler.reboot
-    elif button_clicked=="record-video":
-        record_video
+        handler.reboot()
+        return {"success":"Reboot successfull"}
+    ##elif button_clicked=="record-video":
+    ##   record_video()
 
 @app.get("/get-sensors-list")
 async def get_sensors_list():
-    return handler.sensors
+    sensors_list={"sensors":[]}
+    a=handler.get_sensors()
+    for i in range(len(a)):
+        sensors_list["sensors"].append(a[i].id)
+    return sensors_list
 
 
 

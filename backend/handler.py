@@ -82,6 +82,9 @@ class Handler(Ui_Form):
         # heatmap
         self.s_heatmap_size = self.settings.get("heatmap", "size")
         self.heatmap = Heatmap(res_x=100, res_y=100, range_x=[0,100], range_y=[0,100])
+    
+    def get_sensors(self):
+        return self.sensors
 
     def add_to_events(self, topic, id, data):
         count_v = 0
@@ -240,6 +243,7 @@ class Handler(Ui_Form):
 
     def start_det_pose(self):
         self.send_all("detect", "pose")
+
 
     def start_cal_search(self):
         self.send_all("calibrate", "search")
